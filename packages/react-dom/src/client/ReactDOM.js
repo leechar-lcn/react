@@ -7,8 +7,8 @@
  * @flow
  */
 
-import type {ReactNodeList} from 'shared/ReactTypes';
-import type {Container} from './ReactDOMHostConfig';
+import type { ReactNodeList } from 'shared/ReactTypes';
+import type { Container } from './ReactDOMHostConfig';
 
 import '../shared/checkReact';
 import './ReactDOMClientInjection';
@@ -19,8 +19,8 @@ import {
   unstable_renderSubtreeIntoContainer,
   unmountComponentAtNode,
 } from './ReactDOMLegacy';
-import {createRoot, createBlockingRoot, isValidContainer} from './ReactDOMRoot';
-import {useEvent} from './ReactDOMUseEvent';
+import { createRoot, createBlockingRoot, isValidContainer } from './ReactDOMRoot';
+import { useEvent } from './ReactDOMUseEvent';
 
 import {
   batchedEventUpdates,
@@ -37,22 +37,22 @@ import {
   attemptContinuousHydration,
   attemptHydrationAtCurrentPriority,
 } from 'react-reconciler/src/ReactFiberReconciler';
-import {createPortal as createPortalImpl} from 'shared/ReactPortal';
-import {canUseDOM} from 'shared/ExecutionEnvironment';
-import {setBatchingImplementation} from 'legacy-events/ReactGenericBatching';
+import { createPortal as createPortalImpl } from 'shared/ReactPortal';
+import { canUseDOM } from 'shared/ExecutionEnvironment';
+import { setBatchingImplementation } from 'legacy-events/ReactGenericBatching';
 import {
   setRestoreImplementation,
   enqueueStateRestore,
   restoreStateIfNeeded,
 } from 'legacy-events/ReactControlledComponent';
-import {runEventsInBatch} from 'legacy-events/EventBatching';
+import { runEventsInBatch } from 'legacy-events/EventBatching';
 import {
   eventNameDispatchConfigs,
   injectEventPluginsByName,
 } from 'legacy-events/EventPluginRegistry';
 import ReactVersion from 'shared/ReactVersion';
 import invariant from 'shared/invariant';
-import {warnUnstableRenderSubtreeIntoContainer} from 'shared/ReactFeatureFlags';
+import { warnUnstableRenderSubtreeIntoContainer } from 'shared/ReactFeatureFlags';
 
 import {
   getInstanceFromNode,
@@ -60,8 +60,8 @@ import {
   getFiberCurrentPropsFromNode,
   getClosestInstanceFromNode,
 } from './ReactDOMComponentTree';
-import {restoreControlledState} from './ReactDOMComponent';
-import {dispatchEvent} from '../events/ReactDOMEventListener';
+import { restoreControlledState } from './ReactDOMComponent';
+import { dispatchEvent } from '../events/ReactDOMEventListener';
 import {
   setAttemptSynchronousHydration,
   setAttemptUserBlockingHydration,
@@ -92,7 +92,7 @@ if (__DEV__) {
   ) {
     console.error(
       'React depends on Map and Set built-in types. Make sure that you load a ' +
-        'polyfill in older browsers. https://fb.me/react-polyfills',
+      'polyfill in older browsers. https://fb.me/react-polyfills',
     );
   }
 }
@@ -139,8 +139,8 @@ function renderSubtreeIntoContainer(
       didWarnAboutUnstableRenderSubtreeIntoContainer = true;
       console.warn(
         'ReactDOM.unstable_renderSubtreeIntoContainer() is deprecated ' +
-          'and will be removed in a future major release. Consider using ' +
-          'React Portals instead.',
+        'and will be removed in a future major release. Consider using ' +
+        'React Portals instead.',
       );
     }
   }
@@ -162,9 +162,9 @@ function unstable_createPortal(
       didWarnAboutUnstableCreatePortal = true;
       console.warn(
         'The ReactDOM.unstable_createPortal() alias has been deprecated, ' +
-          'and will be removed in React 17+. Update your code to use ' +
-          'ReactDOM.createPortal() instead. It has the exact same API, ' +
-          'but without the "unstable_" prefix.',
+        'and will be removed in React 17+. Update your code to use ' +
+        'ReactDOM.createPortal() instead. It has the exact same API, ' +
+        'but without the "unstable_" prefix.',
       );
     }
   }
@@ -238,12 +238,12 @@ if (__DEV__) {
         // eslint-disable-next-line react-internal/no-production-logging
         console.info(
           '%cDownload the React DevTools ' +
-            'for a better development experience: ' +
-            'https://fb.me/react-devtools' +
-            (protocol === 'file:'
-              ? '\nYou might need to use a local HTTP server (instead of file://): ' +
-                'https://fb.me/react-devtools-faq'
-              : ''),
+          'for a better development experience: ' +
+          'https://fb.me/react-devtools' +
+          (protocol === 'file:'
+            ? '\nYou might need to use a local HTTP server (instead of file://): ' +
+            'https://fb.me/react-devtools-faq'
+            : ''),
           'font-weight:bold',
         );
       }
