@@ -7,18 +7,18 @@
  * @flow
  */
 
-import type {Fiber} from './ReactFiber';
-import type {FiberRoot} from './ReactFiberRoot';
-import type {RootTag} from 'shared/ReactRootTags';
+import type { Fiber } from './ReactFiber';
+import type { FiberRoot } from './ReactFiberRoot';
+import type { RootTag } from 'shared/ReactRootTags';
 import type {
   Instance,
   TextInstance,
   Container,
   PublicInstance,
 } from './ReactFiberHostConfig';
-import {FundamentalComponent} from 'shared/ReactWorkTags';
-import type {ReactNodeList} from 'shared/ReactTypes';
-import type {ExpirationTime} from './ReactFiberExpirationTime';
+import { FundamentalComponent } from 'shared/ReactWorkTags';
+import type { ReactNodeList } from 'shared/ReactTypes';
+import type { ExpirationTime } from './ReactFiberExpirationTime';
 import type {
   SuspenseHydrationCallbacks,
   SuspenseState,
@@ -28,7 +28,7 @@ import {
   findCurrentHostFiber,
   findCurrentHostFiberWithNoPortals,
 } from 'react-reconciler/src/ReactFiberTreeReflection';
-import {get as getInstance} from 'shared/ReactInstanceMap';
+import { get as getInstance } from 'shared/ReactInstanceMap';
 import {
   HostComponent,
   ClassComponent,
@@ -39,15 +39,15 @@ import getComponentName from 'shared/getComponentName';
 import invariant from 'shared/invariant';
 import ReactSharedInternals from 'shared/ReactSharedInternals';
 
-import {getPublicInstance} from './ReactFiberHostConfig';
+import { getPublicInstance } from './ReactFiberHostConfig';
 import {
   findCurrentUnmaskedContext,
   processChildContext,
   emptyContextObject,
   isContextProvider as isLegacyContextProvider,
 } from './ReactFiberContext';
-import {createFiberRoot} from './ReactFiberRoot';
-import {injectInternals, onScheduleRoot} from './ReactFiberDevToolsHook';
+import { createFiberRoot } from './ReactFiberRoot';
+import { injectInternals, onScheduleRoot } from './ReactFiberDevToolsHook';
 import {
   requestCurrentTimeForUpdate,
   computeExpirationForFiber,
@@ -67,19 +67,19 @@ import {
   warnIfUnmockedScheduler,
   IsThisRendererActing,
 } from './ReactFiberWorkLoop';
-import {createUpdate, enqueueUpdate} from './ReactUpdateQueue';
+import { createUpdate, enqueueUpdate } from './ReactUpdateQueue';
 import {
   getStackByFiberInDevAndProd,
   isRendering as ReactCurrentFiberIsRendering,
   current as ReactCurrentFiberCurrent,
 } from './ReactCurrentFiber';
-import {StrictMode} from './ReactTypeOfMode';
+import { StrictMode } from './ReactTypeOfMode';
 import {
   Sync,
   ContinuousHydration,
   computeInteractiveExpiration,
 } from './ReactFiberExpirationTime';
-import {requestCurrentSuspenseConfig} from './ReactFiberSuspenseConfig';
+import { requestCurrentSuspenseConfig } from './ReactFiberSuspenseConfig';
 import {
   scheduleRefresh,
   scheduleRoot,
@@ -100,15 +100,15 @@ type BundleType = 0 | 1;
 
 type DevToolsConfig = {|
   bundleType: BundleType,
-  version: string,
-  rendererPackageName: string,
-  // Note: this actually *does* depend on Fiber internal fields.
-  // Used by "inspect clicked DOM element" in React DevTools.
-  findFiberByHostInstance?: (instance: Instance | TextInstance) => Fiber | null,
-  // Used by RN in-app inspector.
-  // This API is unfortunately RN-specific.
-  // TODO: Change it to accept Fiber instead and type it properly.
-  getInspectorDataForViewTag?: (tag: number) => Object,
+    version: string,
+      rendererPackageName: string,
+        // Note: this actually *does* depend on Fiber internal fields.
+        // Used by "inspect clicked DOM element" in React DevTools.
+        findFiberByHostInstance ?: (instance: Instance | TextInstance) => Fiber | null,
+        // Used by RN in-app inspector.
+        // This API is unfortunately RN-specific.
+        // TODO: Change it to accept Fiber instead and type it properly.
+        getInspectorDataForViewTag ?: (tag: number) => Object,
 |};
 
 let didWarnAboutNestedUpdates;
@@ -187,10 +187,10 @@ function findHostInstanceWithWarning(
         if (fiber.mode & StrictMode) {
           console.error(
             '%s is deprecated in StrictMode. ' +
-              '%s was passed an instance of %s which is inside StrictMode. ' +
-              'Instead, add a ref directly to the element you want to reference. ' +
-              'Learn more about using refs safely here: ' +
-              'https://fb.me/react-strict-mode-find-node%s',
+            '%s was passed an instance of %s which is inside StrictMode. ' +
+            'Instead, add a ref directly to the element you want to reference. ' +
+            'Learn more about using refs safely here: ' +
+            'https://fb.me/react-strict-mode-find-node%s',
             methodName,
             methodName,
             componentName,
@@ -199,10 +199,10 @@ function findHostInstanceWithWarning(
         } else {
           console.error(
             '%s is deprecated in StrictMode. ' +
-              '%s was passed an instance of %s which renders StrictMode children. ' +
-              'Instead, add a ref directly to the element you want to reference. ' +
-              'Learn more about using refs safely here: ' +
-              'https://fb.me/react-strict-mode-find-node%s',
+            '%s was passed an instance of %s which renders StrictMode children. ' +
+            'Instead, add a ref directly to the element you want to reference. ' +
+            'Learn more about using refs safely here: ' +
+            'https://fb.me/react-strict-mode-find-node%s',
             methodName,
             methodName,
             componentName,
@@ -266,9 +266,9 @@ export function updateContainer(
       didWarnAboutNestedUpdates = true;
       console.error(
         'Render methods should be a pure function of props and state; ' +
-          'triggering nested component updates from render is not allowed. ' +
-          'If necessary, trigger nested updates in componentDidUpdate.\n\n' +
-          'Check the render method of %s.',
+        'triggering nested component updates from render is not allowed. ' +
+        'If necessary, trigger nested updates in componentDidUpdate.\n\n' +
+        'Check the render method of %s.',
         getComponentName(ReactCurrentFiberCurrent.type) || 'Unknown',
       );
     }
@@ -277,7 +277,7 @@ export function updateContainer(
   const update = createUpdate(expirationTime, suspenseConfig);
   // Caution: React DevTools currently depends on this property
   // being called "element".
-  update.payload = {element};
+  update.payload = { element };
 
   callback = callback === undefined ? null : callback;
   if (callback !== null) {
@@ -285,7 +285,7 @@ export function updateContainer(
       if (typeof callback !== 'function') {
         console.error(
           'render(...): Expected the last optional `callback` argument to be a ' +
-            'function. Instead received: %s.',
+          'function. Instead received: %s.',
           callback,
         );
       }
@@ -320,6 +320,7 @@ export function getPublicRootInstance(
   if (!containerFiber.child) {
     return null;
   }
+  debugger
   switch (containerFiber.child.tag) {
     case HostComponent:
       return getPublicInstance(containerFiber.child.stateNode);
@@ -405,9 +406,9 @@ export function attemptHydrationAtCurrentPriority(fiber: Fiber): void {
   markRetryTimeIfNotHydrated(fiber, expTime);
 }
 
-export {findHostInstance};
+export { findHostInstance };
 
-export {findHostInstanceWithWarning};
+export { findHostInstanceWithWarning };
 
 export function findHostInstanceWithNoPortals(
   fiber: Fiber,
@@ -444,7 +445,7 @@ if (__DEV__) {
       return value;
     }
     const key = path[idx];
-    const updated = Array.isArray(obj) ? obj.slice() : {...obj};
+    const updated = Array.isArray(obj) ? obj.slice() : { ...obj };
     // $FlowFixMe number or string is fine here
     updated[key] = copyWithSetImpl(obj[key], path, idx + 1, value);
     return updated;
@@ -482,7 +483,7 @@ if (__DEV__) {
       // (There's no appropriate action type for DevTools overrides.)
       // As a result though, React will see the scheduled update as a noop and bailout.
       // Shallow cloning props works as a workaround for now to bypass the bailout check.
-      fiber.memoizedProps = {...fiber.memoizedProps};
+      fiber.memoizedProps = { ...fiber.memoizedProps };
 
       scheduleUpdateOnFiber(fiber, Sync);
     }
@@ -507,8 +508,8 @@ if (__DEV__) {
 }
 
 export function injectIntoDevTools(devToolsConfig: DevToolsConfig): boolean {
-  const {findFiberByHostInstance} = devToolsConfig;
-  const {ReactCurrentDispatcher} = ReactSharedInternals;
+  const { findFiberByHostInstance } = devToolsConfig;
+  const { ReactCurrentDispatcher } = ReactSharedInternals;
 
   return injectInternals({
     bundleType: devToolsConfig.bundleType,
@@ -544,12 +545,12 @@ export function injectIntoDevTools(devToolsConfig: DevToolsConfig): boolean {
   });
 }
 
-const {IsSomeRendererActing} = ReactSharedInternals;
+const { IsSomeRendererActing } = ReactSharedInternals;
 const isSchedulerMocked =
   typeof Scheduler.unstable_flushAllWithoutAsserting === 'function';
 const flushWork =
   Scheduler.unstable_flushAllWithoutAsserting ||
-  function() {
+  function () {
     let didFlushWork = false;
     while (flushPassiveEffects()) {
       didFlushWork = true;
@@ -610,7 +611,7 @@ export function act(callback: () => Thenable) {
         // if it's _less than_ previousActingUpdatesScopeDepth, then we can assume the 'other' one has warned
         console.error(
           'You seem to have overlapping act() calls, this is not supported. ' +
-            'Be sure to await previous act() calls before making a new one. ',
+          'Be sure to await previous act() calls before making a new one. ',
         );
       }
     }
@@ -637,13 +638,13 @@ export function act(callback: () => Thenable) {
       if (typeof Promise !== 'undefined') {
         //eslint-disable-next-line no-undef
         Promise.resolve()
-          .then(() => {})
+          .then(() => { })
           .then(() => {
             if (called === false) {
               console.error(
                 'You called act(async () => ...) without await. ' +
-                  'This could lead to unexpected testing behaviour, interleaving multiple act ' +
-                  'calls and mixing their scopes. You should - await act(async () => ...);',
+                'This could lead to unexpected testing behaviour, interleaving multiple act ' +
+                'calls and mixing their scopes. You should - await act(async () => ...);',
               );
             }
           });
@@ -690,7 +691,7 @@ export function act(callback: () => Thenable) {
       if (result !== undefined) {
         console.error(
           'The callback passed to act(...) function ' +
-            'must return undefined, or a Promise. You returned %s',
+          'must return undefined, or a Promise. You returned %s',
           result,
         );
       }

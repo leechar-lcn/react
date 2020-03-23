@@ -7,7 +7,7 @@
  * @flow
  */
 
-import {enableNewReconciler} from 'shared/ReactFeatureFlags';
+import { enableNewReconciler } from 'shared/ReactFeatureFlags';
 
 // The entry file imports either the old or new version of the reconciler.
 // During build and testing, this indirection is always shimmed with the actual
@@ -106,6 +106,7 @@ export const flushPassiveEffects = enableNewReconciler
 export const IsThisRendererActing = enableNewReconciler
   ? IsThisRendererActing_new
   : IsThisRendererActing_old;
+debugger
 export const getPublicRootInstance = enableNewReconciler
   ? getPublicRootInstance_new
   : getPublicRootInstance_old;
